@@ -1,0 +1,296 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx,caption}
+\usepackage[a4paper, margin=1in]{geometry}
+\linespread{1.15}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+\usepackage[margin=3cm]{caption}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{braket}
+\usepackage{mathtools}
+
+\usepackage{xcolor,sectsty}
+\definecolor{astral}{RGB}{46,116,181}
+\subsectionfont{\color{astral}}
+\sectionfont{\color{astral}}
+
+\title{\includegraphics[width=0.1\textwidth]{ufallogo.png} \\
+\Huge{\color{astral}\textbf{Segunda Quantização}}}
+
+%\title{\Huge{\color{astral}\textbf{Sistemas Quânticos Não-Hermitianos}}}
+
+\author{Paulo Brandão}
+\date{Maio de 2017}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
+\newcommand*{\bfrac}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+\begin{document}
+
+\maketitle
+
+
+\section{Introdução e objetivos da aula}
+
+A formulação de Schrödinger da mecânica quântica em termos das funções de onda de um sistema é utilizada e conhecida por todo aluno que começa um curso de teoria quântica. De fato, antes de Dirac criar seu formalismo em termos de Kets e Bras, esse era o único formalismo disponível e a teoria quântica era conhecida como mecânica ondulatória, fazendo referência ao papel ondulatório da função de onda. No entanto, quando o número de partículas no sistema aumenta, a descrição da dinâmica desse conjunto se torna impraticável por dois motivos. O primeiro motivo tem a ver com o fato de que partículas quânticas de mesma natureza são indistinguíveis. Se trocarmos a posição e a orientação do spin de dois elétrons num sistema, por exemplo, qualquer quantidade observável deve permanecer invariante. Porém, a função de onda do sistema adquire um sinal negativo! Isso ocorre porque elétrons são férmions. A outra classe de partículas, chamadas bósons, não mudam a função de onda caso dois bósons sejam trocados. Escrever, portanto, a função de onda para 500 partículas pode se tornar uma tarefa bastante trabalhosa. O outro motivo se deve ao fato de que os operadores que atuam no sistema com $N$ partículas dependem de maneira explícita do número $N$ de partículas presentes. Lidar com um número muito grande de operadores (além da enorme função de onda a ser obtida) pode se tornar indesejável.
+
+A segunda quantização é uma nova formulação da teoria quântica, completamente equivalente à formulação de Schrödinger, que tem como objetivo tratar sistemas formados por muitas partículas de uma forma mais conveniente e transparente, com um número muito menor de graus de liberdade necessários para caracterizar o sistema. Por essa razão, o formalismo da segunda quantização é bastante utilizado em áreas de pesquisa como física da matéria condensada, e sua subárea da física do estado sólido, justamente porque nessa linha de pesquisa estamos interessados na interação entre partículas da ordem do número de avogadro. O formalismo da segunda quantização também é muito utilizado na teoria quântica relativística onde partículas podem ser aniquiladas e criadas através de espalhamentos quânticos. Dessa forma, é essencial que o aluno tenha pelo menos um conhecimento elementar sobre essas ideias. O objetivo da aula será, portanto, demonstrar ao estudante como formular a segunda quantização e explicitar suas vantagens sobre a formulação de Schrödinger.
+
+A aula começa na seção 2 com uma discussão sobre os estados estacionários de uma única partícula que serão muito importantes em toda a análise. A seção 3 estende a análise da seção 2 considerando $N$ partículas colocadas nos estados estacionários e discute o problema de simetrizar (ou antisimetrizar) a função de onda de acordo com a natureza de bósons e férmions. É nesta seção que indicaremos as desvantagens da utilização do formalismo de Schrödinger para resolver o problema de muitas partículas. A seção 4 discute a proposta da nova formulação em termos dos estados de Fock e operadores de criação e aniquilação de partículas para bósons e férmions. Mostraremos que esse novo formalismo é completamente equivalente ao formalismo de Schrödinger e incorpora a simetria de bósons e férmions através dos operadores de criação e aniquilação bosônicos e fermiônicos. O objetivo da seção 5 é mostrar como podemos escrever todos os operadores observáveis em termos dos operadores de criação e aniquilação. Esse é o passo mais importante na aula. A análise é dividida para operadores de uma única partícula e operadores que atuam em duas partículas. A aula termina na seção 6 com a introdução dos operadores de campo que também são muito utilizados e facilitam de certa forma a análise anterior.
+
+
+
+
+\section{Estados estacionários de uma partícula}
+
+Considere um conjunto completo de funções de onda ortogonais e normalizadas de estados estacionários de uma única partícula:
+\begin{equation}
+    \{ \phi_1(\xi), \phi_2(\xi),...,\phi_p(\xi),... \}.
+\end{equation}
+Esse conjunto pode representar, por exemplo, o poço quadrado infinito de tamanho $a$ em uma dimensão:
+\begin{equation}
+    \left\{ ...,\phi_p(x) = \sqrt{\frac{2}{a}}\sin \left(  \frac{p\pi x}{a}  ,  \right),...  \right\} \hspace{0.5cm} \xi \rightarrow x,
+\end{equation}
+as funções de onda do átomo de Hidrogênio
+\begin{equation}
+    \left\{..., \phi_{nlm}(r,\theta,\phi),... \right\} \hspace{0.5cm} p\rightarrow nlm \hspace{0.5cm} \text{e} \hspace{0.5cm} \xi \rightarrow r,\theta,\phi ,
+\end{equation}
+ou ainda as funções de onda do oscilador harmônico simples em uma dimensão
+\begin{equation}
+    \left\{..., \phi_{p}(x) = A\text{H}_n(x)e^{-x^2 / b^2}   \right\} \hspace{0.5cm} \xi \rightarrow x,
+\end{equation}
+onde H$_n$ é o polinômio de Hermite e $(b,A)$ constantes. Assim, o parâmetro $\xi$ pode representar qualquer conjunto de variáveis necessárias para caracterizar o sistema. Em geral, dizemos que $\xi$ é especificado pela posição $\mathbf{r}$ e pela projeção do spin $s$ num certo eixo. O índice $p$ pode representar apenas um índice como no caso do poço quadrado e do oscilador harmônico em uma dimensão ou vários índices como no caso do átomo de hidrogênio. Se o poço quadrado e o oscilador forem estendidos para mais dimensões, o índice $p$ representará o conjunto total.
+
+\section{N partículas em estados estacionários}
+
+Suponha que agora temos $N$ partículas que serão distribuídas de forma arbitrária nos infinitos estados estacionários descritos na seção anterior. Dessa forma, cada partícula pode ocupar os infinitos estados $\{ \phi_1(\xi), \phi_2(\xi),...,\phi_p(\xi),... \}$:
+\begin{equation}
+\text{Partícula 1} \rightarrow 
+\left\{
+  \begin{array}{c}
+    \phi_1(\xi_1)\\
+    \phi_2(\xi_1)\\
+    \phi_3(\xi_1)\\
+    \vdots
+  \end{array}
+\right\}
+\hspace{0.5cm}
+\text{Partícula 2} \rightarrow 
+\left\{
+  \begin{array}{c}
+    \phi_1(\xi_2)\\
+    \phi_2(\xi_2)\\
+    \phi_3(\xi_2)\\
+    \vdots
+  \end{array}
+\right\}
+\hspace{0.5cm}
+\text{Partícula }N \rightarrow 
+\left\{
+  \begin{array}{c}
+    \phi_1(\xi_N)\\
+    \phi_2(\xi_N)\\
+    \phi_3(\xi_N)\\
+    \vdots
+  \end{array}
+\right\}.
+\end{equation}
+Se $N = 2$, por exemplo, um próton e um elétron, podemos colocar o próton no estado $\phi_2(\xi_1)$ e o elétron no estado $\phi_3(\xi_2)$. Nesse caso, a função de onda \textbf{do sistema} é
+\begin{equation}
+    \Phi(\xi_1,\xi_2) = \phi_2(\xi_1) \phi_3(\xi_2)
+\end{equation}
+pois as partículas são \textbf{distinguíveis}. Se os estados estacionários forem do poço quadrado infinito descrito na seção anterior, teríamos
+\begin{equation}
+    \Phi(x_1,x_2) = \sqrt{\frac{2}{a}}\sin \left(  \frac{2\pi x_1}{a}  ,  \right)\sqrt{\frac{2}{a}}\sin \left(  \frac{3\pi x_2}{a}  \right).
+\end{equation}
+A situação complica um pouco se as partículas forem \textbf{indistinguíveis}. Se tivermos dois elétrons e queremos distribuí-los nos estados $\phi_1$ e $\phi_2$, por exemplo, não temos como saber qual elétron irá ocupar qual estado. A função de onda do sistema $\phi(\xi_1,\xi_2)$ nesse caso deve ser \textbf{antissimétrica} de modo que $\phi(\xi_1,\xi_2) = -\phi(\xi_2,\xi_1)$ pois elétrons (assim como prótons e nêutrons) são \textbf{férmions}. Assim, podemos escrever
+\begin{equation}
+    \Phi(\xi_1,\xi_2)_A = \frac{1}{\sqrt{2}}[\phi_1 (\xi_1) \phi_2 (\xi_2) - \phi_1 (\xi_2) \phi_2 (\xi_1)],
+\end{equation}
+onde o índice $A$ indica ``Antissimétrico''. É fácil constatar que, para o caso dos férmions, se os dois elétrons ocupam o mesmo estado $\xi_1 = \xi_2$ então $\phi_A = 0$. Esse é o famoso \textbf{Princípio da Exclusão de Pauli} válido para todos os férmions. Esse princípio é estendido, obviamente, para o caso de $N$ férmions idênticos. Caso as duas partículas sejam \textbf{bósons}, a função de onda do sistema deve ser \textbf{simétrica} na troca das duas variáveis $\xi_1$ e $\xi_2$: $\Phi(\xi_1,\xi_2) = +\Phi(\xi_2,\xi_1)$. Nesse caso, a função de onda é dada por
+\begin{equation}
+    \Phi(\xi_1,\xi_2)_S = \frac{1}{\sqrt{2}}[\phi_1 (\xi_1) \phi_2 (\xi_2) + \phi_1 (\xi_2) \phi_2 (\xi_1)],
+\end{equation}
+onde o índice $S$ indica ``Simétrico''. Fica claro a partir desses exemplos que escrever a função de onda para um sistema de $N$ partículas idênticas (isto é, férmions idênticos ou bósons idênticos) pode ser bastante trabalhoso. Existem várias maneiras de se escrever a função de onda do sistema de $N$ partículas em termos dos estados estacionários, como por exemplo utilizando o determinante de Slater para férmions e a permutação dos estados para bósons. No entanto, independente do método empregado, todos deverão satisfazer a propriedade simétrica ou antissimétrica para bósons e férmions:
+\begin{equation}
+    P_{ij}\Phi(\xi_1,...,\xi_i,...,\xi_j,...,\xi_N) = + \Phi(\xi_1,...,\xi_i,...,\xi_j,...,\xi_N) \hspace{0.5cm} \text{(bósons)}
+    \label{boson}
+\end{equation}
+\begin{equation}
+    P_{ij}\Phi(\xi_1,...,\xi_i,...,\xi_j,...,\xi_N) = - \Phi(\xi_1,...,\xi_i,...,\xi_j,...,\xi_N) \hspace{0.5cm} \text{(férmions)},
+    \label{fermion}
+\end{equation}
+onde $P_{ij}$ é o operador de permutação que troca o estado $\xi_i$ pelo estado $\xi_j$ e vice-versa.
+
+O grande problema com essa formulação, apesar de ser completamente válida, é que ela se torna inadequada quando queremos tratar a dinâmica de um sistema consistindo de, por exemplo, 1 mol de elétrons. O formalismo de Schrödinger da função de onda não é adequado para tratar sistemas com muitas partículas. É necessária uma nova formulação capaz de conseguir lidar com um número $N$ arbitrário de partículas idênticas. Além disso, qualquer que seja o método utilizado para conseguir esse feito, ele deve ser consistente com as propriedades de simetria para bósons e férmions \eqref{boson} e \eqref{fermion}.
+
+\section{Uma nova formulação}
+
+Vamos considerar daqui em diante sistemas formados apenas por bósons ou férmions idênticos. Suponha que, em vez de descrever o estado de $N$ partículas utilizando a função de onda $\Phi$ do sistema (que pode ser extremamente trabalhoso), especificamos apenas quantas partículas ocupam tais estados através do ket
+\begin{equation}
+    \ket{n_1,n_2,...,n_p,...}.
+\end{equation}
+Por exemplo, o ket $\ket{1,2,0,...,0,...}$ representa um sistema com uma partícula no estado $\phi_1$, duas partículas no estado $\phi_2$ e nenhum outro estado $\phi_p$ contém partículas. O ket $\ket{1,1,1,1...,1..}$ contém uma partícula em cada estado $\phi_p$ e o ket $\ket{0,0,0,...,0,...}$ representa um sistema sem partículas, ou seja, o vácuo. Trocamos a descrição do sistema quântico em termos da função de onda $\Phi$ para o ket $\ket{n_1,n_2,...,n_p,...}$ chamado de estado de Fock. Os operadores das quantidades físicas, incluindo o Hamiltoniano do sistema, devem ser reformulados em termos de suas ações no ket de número de ocupação. Antes de fazer isso, entretanto, vamos definir os importantes operadores de criação e aniquilação de partículas. É útil separar essa análise em dois casos.
+
+\subsection{Operadores de criação e aniquilação para bósons}
+
+Como bósons não satisfazem o princípio da exclusão de Pauli, podemos colocar várias partículas no mesmo estado $\phi_p$. Ou, em termos do estado de Fock, podemos ter várias configurações $\ket{2,5,1,0,...,...}$, $\ket{1000,0,...,0...}$, etc, onde $n_p$, que representa o número de partículas no estado $\phi_p$, pode ser qualquer número inteiro positivo ou zero. Vamos definir os operadores de criação e aniquilação $b^\dagger$ e $b$ para bósons através das relações de comutação
+\begin{equation}
+    [b_p,b^\dagger_{p'}] = \delta_{pp'} \hspace{0.5cm} \text{e} \hspace{0.5cm} [b_p,b_{p'}] = [b^\dagger_p,b^\dagger_{p'}] = 0.
+    \label{eq13}
+\end{equation}
+Em palavras, o operador $b^\dagger_p$ acrescenta uma partícula no sistema no estado $\phi_p$ e o operador $b_p$ retira uma partícula do sistema que estava no estado $\phi_b$. Por esses motivos, o operador $b^\dagger$ é chamado de \textbf{operador de criação} e o operador $b$ de \textbf{operador de aniquilação ou destruição}. O estudante já deve ter encontrado esse tipo de análise quando estudou o oscilador harmônico simples. 
+
+Será que essas definições e consequências satisfazem a condição de simetria para bósons? Isto é, se trocarmos o estado de dois bósons a função de onda permanece simétrica? Vamos verificar. Suponha que criamos o estado
+\begin{equation}
+    \ket{\alpha} = b_2^{\dagger}b_1^\dagger \ket{0,0,....}
+\end{equation}
+que consiste numa partícula no estado estacionário $\phi_1$ e outra partícula no estado estacionário $\phi_2$. Vamos aplicar o operador de permutação $P_{12}$ e ver o que acontece:
+\begin{equation}
+\begin{split}
+    P_{12}\ket{\alpha} &= P_{12} b_2^{\dagger}b_1^\dagger \ket{0,0,....} \\
+                       &= b_1^{\dagger}b_2^\dagger \ket{0,0,....} \\
+                       &= b_2^{\dagger}b_1^\dagger \ket{0,0,....} \hspace{0.5cm} \text{(pois comutam)}\\ 
+                       &= +\ket{\alpha}.
+\end{split}
+\end{equation}
+Concluímos que as propriedades de simetria de bósons estão contidas nas relações de comutação. É fácil ver que qualquer estado de Fock $\ket{n_1,n_2,...,n_p,...}$ pode ser gerado através da aplicação sucessiva dos operadores de criação $b_p^\dagger$:
+\begin{equation}
+    \ket{n_1,n_2,...,n_p,...} \propto ...(b^\dagger_{p})^{n_p}...(b^\dagger_{2})^{n_2}(b^\dagger_{1})^{n_1}\ket{0,0,...,0,...}.
+\end{equation}
+A constante de normalização pode ser calculada e está descrita em todos os livros que tratam de partículas idênticas. o estudante que se interessar, pode consultá-los.
+
+\subsection{Operadores de criação e aniquilação para férmions}
+
+Se aplicarmos o mesmo tratamento acima para um sistema formado por férmions idênticos temos que levar em conta que férmions satisfazem o princípio da exclusão de Pauli. Dessa forma, \textbf{jamais} encontraremos estados do tipo $\ket{2,2,1,...} $ ou $\ket{0,2,0,...}$ para férmions. Sempre devemos ter $n_p = 0$ ou $n_p = 1$ qualquer que seja o estado populado $p$. Isso muda completamente as relações de comutação quando comparadas com as de bósons, como veremos agora.
+
+A única diferença entre as relações de comutação de bósons e férmions é que para férmions postulamos as relações de anticomutação
+\begin{equation}
+    \{c_p,c^\dagger_{p'}\} = \delta_{pp'} \hspace{0.5cm} \text{e} \hspace{0.5cm} \{c_p,c_{p'}\} = \{c^\dagger_p,c^\dagger_{p'}\} = 0.  
+    \label{eq17}
+\end{equation}
+onde $\{ A,B \} = AB+BA$ é o \textbf{anticomutador} dos operadores $A$ e $B$. Suponha que queiramos adicionar duas partículas no mesmo estado $p$:
+\begin{equation}
+    \ket{\alpha} = c^\dagger_{p}c^\dagger_{p}\ket{0,0,...,0,...}
+\end{equation}
+mas, pela relação de (anti)comutação, $c^\dagger_{p}c^\dagger_{p} = 0$ de modo que $\ket{\alpha} = 0$ que é consistente com o princípio da exclusão de Pauli. Será que a relação de (anti)comutação também incorpora a simetria da função de onda? Vamos checar:
+\begin{equation}
+\begin{split}
+    P_{12}\ket{\alpha} &= P_{12} c_2^{\dagger}c_1^\dagger \ket{0,0,....} \\
+                       &= c_1^{\dagger}c_2^\dagger \ket{0,0,....} \\
+                       &= -c_2^{\dagger}c_1^\dagger \ket{0,0,....} \hspace{0.5cm} \text{(pois anticomutam)}\\ 
+                       &= -\ket{\alpha}.
+\end{split}
+\end{equation}
+Mostramos dessa forma que o estado $\ket{\alpha}$ é antissimétrico, como esperado para férmions idênticos.
+
+A \textit{primeira quantização} é a receita que o estudante aprende no início do curso de teoria quântica onde as variáveis clássicas de posição $x$ e momento $p$, que satisfazem uma relação envolvendo os colchetes de Poisson, são promovidas ao status de operadores satisfazendo a relação de comutação fundamental $[x,p] = i\hbar$. A formulação da dinâmica do sistema em termos das novas definições de comutação (13) e (17) é chamada de \textit{segunda quantização}.
+
+Conclusão: As propriedades de simetria da função de onda de férmions e bósons estão contidas nas relações de comutação e anticomutação \eqref{eq13} e \eqref{eq17}. Já sabemos como expressar o sistema de $N$ partículas em termos dos estados de Fock $\ket{n_1,n_2,...,n_p,...}$. Resta agora saber como os operadores observáveis atuam nesses kets de estado.
+
+\section{Observáveis em termos dos operadores de criação e aniquilação}
+
+Chegamos na parte mais importante da nova formulação que é a representação de \textbf{todos} os operadores observáveis em termos dos operadores de criação e aniquilação. Somente após formular essas relações conseguiremos calcular a atuação de um Hamiltoniano ou operador momento, por exemplo, no ket de estado de ocupação. É útil separar essa análise mais uma vez em dois casos. O motivo dessa separação é que existem operadores que atuam somente em uma partícula e operadores que atuam em duas ou mais partículas. Por exemplo, num sistema de $N$ partículas, o operador total de momento
+\begin{equation}
+    P_{\text{tot}} = \frac{p_1^2}{2m} + \frac{p_2^2}{2m} + ... + \frac{p_N^2}{2m},
+\end{equation}
+apesar de conter operadores que atuam em todas as partículas, cada um desses operadores atua somente em uma partícula. Em contraste, a energia de interação total
+\begin{equation}
+    V_{\text{tot}} = \sum_{i\neq j \text{ e } i> j} V(\xi_i,\xi_j)
+\end{equation}
+sempre atua em pares de partículas. Assim, dividimos nossa análise em observáveis de uma partícula e em observáveis de várias partículas.
+
+\subsection{Observáveis de uma partícula}
+
+Considere um sistema formado por bósons idênticos. Suponha que $F_j^{(1)}$ representa um operador de alguma quantidade que atua na partícula $j$, isto é, ele atua somente nas variáveis $\xi_j$. Introduzimos o operador total
+\begin{equation}
+    F^{(1)} = \sum_j F_j^{(1)}.
+\end{equation}
+Por exemplo, o momento de cada partícula no sistema é dado pelo operador $P_j = -(i/\hbar)\nabla_{\xi_j}$ e o operador momento total é dado por
+\begin{equation}
+    P = -(i/\hbar)\nabla_{\xi_1} + -(i/\hbar)\nabla_{\xi_2} + ... + -(i/\hbar)\nabla_{\xi_N} = \sum_j -(i/\hbar)\nabla_{\xi_j} = \sum_j P_j,
+\end{equation}
+onde claramente identificamos $F^{(1)} \rightarrow P$ e $F_j^{(1)} \rightarrow P_j$. Para escrever o operador $F^{(1)}$ em termos dos operadores de criação e aniquilação, primeiro calculamos os elementos de matriz
+\begin{equation}
+    G_{ik}^{(1)} = \int \phi_i^{*}(\xi)F_j^{(1)}\phi_k(\xi)d\xi.
+\end{equation}
+No caso do operador momento, por exemplo, devemos calcular
+\begin{equation}
+    G_{ik}^{(1)} = -\frac{i}{\hbar}\int \phi_i^{*}(\xi)\nabla_{\xi}\phi_k(\xi)d\xi.
+\end{equation}
+Após obter os números $G_{ik}^{(1)}$, o operador $F^{(1)}$ pode ser escrito na forma
+\begin{equation}
+    F^{(1)} = \sum_{ik}G_{ik}^{(1)}b_i^\dagger b_k.
+    \label{eq26}
+\end{equation}
+Assim, conseguimos expressar um operador ordinário, que atua nas funções das coordenadas $\xi$, na forma de um operador que atua nas funções das novas variáveis, os números de ocupação $n_p$. 
+
+\subsection{Observáveis de duas partículas}
+
+O resultado anterior pode ser generalizado para operadores do tipo 
+\begin{equation}
+    V_{\text{tot}} = \sum_{i\neq j \text{ e } i> j} V(\xi_i,\xi_j)
+\end{equation}
+que atuam em duas partículas. Se denotarmos esse operador total como $F^{(2)}$ então
+\begin{equation}
+    F^{(2)} = \sum_j F_j^{(2)}.
+\end{equation}
+Os coeficientes $G_{ik}^{(2)}$ são dados agora por
+\begin{equation}
+    G_{iklm}^{(2)} = \int \phi_i^{*}(\xi_1)\phi_k^{*}(\xi_2)F_j^{(2)}\phi_l(\xi_1)\phi_m(\xi_2)d\xi_1 d\xi_2.
+\end{equation}
+O operador $F^{(2)}$ pode ser escrito então na forma
+\begin{equation}
+    F^{(2)} = \frac{1}{2}\sum_{iklm} G_{iklm}^{(2)}b_i^\dagger b_k^\dagger b_m b_l.
+\end{equation}
+Um Hamiltoniano de um sistema de $N$ bósons pode ser representado na forma
+\begin{equation}
+    H = \sum_{ik}G_{ik}^{(1)}b_i^\dagger b_k + \frac{1}{2}\sum_{iklm} G_{iklm}^{(2)}b_i^\dagger b_k^\dagger b_m b_l + ...
+\end{equation}
+que nos dá a expressão requerida para o Hamiltoniano na forma de um operador que atua nos estados de Fock descritos nas seções anteriores. Se as partículas \textbf{não interagem}, o segundo termo é nulo e o Hamiltoniano pode ser escrito na forma
+\begin{equation}
+    H = \sum_{ik}G_{ik}^{(1)}b_i^\dagger b_k
+\end{equation}
+que pode ser simplificado se a base escolhida $\{ \phi_1(\xi), \phi_2(\xi),...,\phi_p(\xi),... \}$ forem autoestados dos operadores $F_j^{(1)}$. As relações (26) e (30) também servem para férmions, com a simples mudança $b\rightarrow c$. No entanto, deve-se lembrar que as relações de comutação são diferentes e, ao resolver um determinado problema, pode ser necessário utilizá-las durante o procedimento.
+
+\section{Operadores de Campo}
+
+O formalismo desenvolvido até agora pode ser colocado numa forma mais compacta pela introdução dos operadores de campo:
+
+\begin{equation}
+    \hat{\psi}(\xi) = \sum_i \phi_i(\xi)a_i \hspace{0.5cm} \text{e} \hspace{0.5cm} \hat{\psi}^{\dagger }(\xi) = \sum_i \phi_i^{*} (\xi)a_i^\dagger,
+\end{equation}
+onde as variáveis $\xi$ são tomadas como parâmetros. Note que os \textbf{operadores} $\psi$ são expressos como um tipo de combinação linear entre as funções de onda estacionárias da base e os operadores de criação e aniquilação (a notação $a$ e $a^\dagger$ serve tanto para férmions como para bósons). É fácil demonstrar que para bósons (veja lista de exercício)
+\begin{equation}
+    \hat{\psi}(\xi)\hat{\psi}(\xi ') - \hat{\psi}(\xi ')\hat{\psi}(\xi) = 0 \hspace{0.5cm} \text{e} \hspace{0.5cm} \hat{\psi}(\xi)\hat{\psi}^\dagger (\xi ') - \hat{\psi}^\dagger (\xi ')\hat{\psi}(\xi) = \delta(\xi - \xi ') \hspace{0.5cm} \text{Bósons}
+\end{equation}
+e para férmions
+\begin{equation}
+    \hat{\psi}(\xi)\hat{\psi}(\xi ') + \hat{\psi}(\xi ')\hat{\psi}(\xi) = 0 \hspace{0.5cm} \text{e} \hspace{0.5cm} \hat{\psi}(\xi)\hat{\psi}^\dagger (\xi ') + \hat{\psi}^\dagger (\xi ')\hat{\psi}(\xi) = \delta(\xi - \xi ') \hspace{0.5cm} \text{Férmions}.
+\end{equation}
+O operador $F^{(1)}$ pode ser reescrito em termos dos operadores de campo
+\begin{equation}
+    F^{(1)} = \int \hat{\psi}^\dagger (\xi) F_j^{(1)} \hat{\psi} (\xi) d\xi
+\end{equation}
+onde é entendido que o operador $F_j^{(1)}$ atua em funções do parâmetro $\xi$ em $\hat{\psi}(\xi)$. Da mesma forma, o operador de duas partículas $F^{(2)}$ pode ser colocado em termos dos operadores de campo
+\begin{equation}
+    F^{(2)} = \frac{1}{2}\int \int \hat{\psi}^\dagger (\xi) \hat{\psi}^\dagger (\xi ') F_j^{(2)} \hat{\psi} (\xi ')\hat{\psi}(\xi) d\xi d\xi '
+\end{equation}
+Observe como essas relações lembram a média de funções tomadas na primeira quantização! Mas, claro, elas são válidas para $N$ partículas no sistema. Essa era a forma mais compacta que desejamos.
+
+\section{Conclusões}
+
+Desenvolvemos nesta aula uma análise elementar do formalismo da segunda quantização para sistemas com muitas partículas. Nosso objetivo foi mostrar ao estudante as ideias essenciais por trás do método de uma forma bastante clara e simples. Existem várias aplicações práticas dos resultados fornecidos acima mas uma análise mais detalhada iria nos levar muito longe do método. O aluno que quiser investigar mais a fundo os problemas solucionados pela segunda quantização bem como aperfeiçoamentos do método pode consultar as referências fornecidas no plano de aula.
+
+
+
+
+
+\end{document}

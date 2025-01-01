@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[a4paper, margin=1in]{geometry}
+
+\usepackage{xcolor,sectsty}
+\definecolor{astral}{RGB}{46,116,181}
+\subsectionfont{\color{astral}}
+\sectionfont{\color{astral}}
+
+\linespread{1.15}
+\title{\color{astral}\textbf{Lista de Exercícios} \\ \textbf{Métodos Perturbativos em Mecânica Quântica}}
+\author{Paulo Brandão}
+\date{Maio de 2017}
+
+\begin{document}
+
+\maketitle
+
+
+\noindent 1. Utilize a teoria da perturbação de segunda ordem para encontrar aproximações para as raízes das seguintes equações:
+
+\vspace{1cm}
+
+\noindent (a) $x^2 + x + 6\varepsilon = 0$;\\
+\noindent (b) $x^3 - \varepsilon x - 1 = 0$;\\
+\noindent (c) $x^3 + \varepsilon x^2 - x = 0$.
+
+\vspace{1cm}
+
+\noindent 2. Encontre uma fórmula genérica para os coeficientes $a_n$ da série (4) das notas de aula e, com isso, calcule o raio de convergência da série.
+
+\vspace{1cm}
+
+\noindent 3. Encontre uma fórmula genérica para os coeficientes $a_n$ da série (6) das notas de aula e, com isso, calcule o raio de convergência da série.
+
+\vspace{1cm}
+
+\noindent 4. Suponha que colocamos uma perturbação do tipo delta dirac no centro do poço quadrado infinito:
+\begin{equation}
+    W = \varepsilon\delta(x-a/2),
+\end{equation}
+onde $\varepsilon$ é uma constante. (a) Encontre as correções de primeira ordem da energia. Explique porque as energias não são perturbadas para $n$ par. (b) Encontre os primeiros termos não-nulos na expansão da função de de onda corrigida de primeira ordem.
+
+\vspace{1cm}
+
+\noindent 5. Considere uma partícula de massa $m$ que esteja livre para se mover numa região unidimensional de comprimento $L$ que se fecha nela mesma. (a) Mostre que os estados estacionários podem ser escritos na forma
+\begin{equation}
+    \psi_n (x) = \frac{1}{\sqrt{L}}e^{2\pi i n x/L}
+\end{equation} 
+com $-L/2<x<L/2$,  $n = 0,\pm 1,\pm2 ,...$ e energias
+\begin{equation}
+    E_n = \frac{2}{m}\left( \frac{n\pi\hbar}{L} \right)^2.
+\end{equation}
+Note que todas as energias, com exceção do estado fundamentel $n = 0$, são duplamente degeneradas. (b) Encontre a correção em primeira ordem da energia se introduzirmos a perturbação
+\begin{equation}
+    W = -V_{0}e^{-x^2 / a^2}.
+\end{equation}
+
+
+
+
+\end{document}

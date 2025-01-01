@@ -1,0 +1,262 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx,caption}
+\usepackage[a4paper, margin=1in]{geometry}
+\linespread{1.15}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+\usepackage[margin=3cm]{caption}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{braket}
+\usepackage{mathtools}
+
+\usepackage{xcolor,sectsty}
+\definecolor{astral}{RGB}{46,116,181}
+\subsectionfont{\color{astral}}
+\sectionfont{\color{astral}}
+
+\title{\includegraphics[width=0.1\textwidth]{ufallogo.png} \\
+\Huge{\color{astral}\textbf{Dissipação em Sistemas Quânticos}}}
+\author{Paulo Brandão}
+\date{Maio de 2017}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
+\newcommand*{\bfrac}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+A experiência nos mostra que todo processo, movimento ou oscilação irá cessar após um tempo se não adicionarmos energia de uma fonte externa para dentro do sistema. A razão disso acontecer é o fato de que energia é dissipada: nenhum sistema é perfeitamente isolado das suas vizinhanças, ou ambiente, e qualquer energia inicialmente acumulada no sistema irá eventualmente ser transferida para o ambiente. Isso acontece em sistemas descritos pelas equações de Newton, ou seja, sistemas clássicos, e em sistemas descritos pela equação de Schrödinger, isto é, sistemas quânticos. Em sistemas clássicos é relativamente fácil imaginar processos dissipativos. Um objeto que se move numa superfície com atrito, por exemplo, tende a parar seu movimento após um certo período de tempo. Toda sua energia cinética foi perdida e o movimento é irreversível. O objetivo dessa é aula é compreender o processo de dissipação em sistemas descritos pelas equações da mecânica quântica. Entretanto, o problema da dissipação em sistemas quânticos é muito sutil e descrevê-lo através de uma aula no nível de graduação é uma tarefa extremamente difícil. Assim, para facilitar a análise, consideraremos processos dissipativos que ocorrem na interação da radiação com a matéria. A área de pesquisa que lida com essa subclasse de processos é a óptica quântica. O único pré-requisito necessário para que o estudante consiga compreender o que vem a seguir é um conhecimento de mecânica quântica ao nível de graduação, como adquirido pelo livro do Cohen, por exemplo. Nossa análise começa na seção 2 com uma discussão da dissipação em sistemas clássicos. O objetivo dessa seção é mostrar que sistemas descritos pelas equações de Newton podem nos fornecer algumas dicas de como tratar dissipação em sistemas quânticos. A seção 3 descreve as ideias por trás de processos dissipativos em sistemas quânticos e a sua relação com a irreversibilidade temporal. Uma tentativa de quantizar o oscilador harmônico clássico amortecido de uma maneira direta também é feita nesta seção. Na seção 4 discutimos a formulação da descrição dos processos dissipativos através da equação mestra utilizando o operador densidade do sistema. O objetivo principal dessa seção é mostrar ao aluno as aproximações feitas para obter a equação de evolução do operador densidade do sistema. Aplicamos as ideias da equação mestra nas seções 5 e 6 que descrevem um oscilador harmônico amortecido interagindo com outros infinitos osciladores harmônicos e a emissão espontânea de um átomo de dois níveis. Encerramos a discussão na seção 6 com as conclusões.
+
+\section{Dissipação em sistemas clássicos}
+
+Todo estudante que passou por um curso de física 1 lidou com processos dissipativos na mecânica clássica. A força de atrito ou a viscosidade de um fluido representam grandezas que se opõem ao movimento da partícula e, portanto, roubam a energia do sistema. Uma das classes mais gerais de forças dissipativas são as forças proporcionais a velocidade do objeto que se move
+\begin{equation}
+    f = -\gamma v,
+    \label{atrito}
+\end{equation}
+onde $\gamma$ pode ser considerado como um coeficiente de atrito ou fricção. É fácil demonstrar, portanto, que uma partícula que se move na direção do eixo $x$ sob ação somente da força de atrito acima, tem sua posição $x$ no instante $t$ descrita pela equação
+\begin{equation}
+    \frac{d^2 x}{dt^2} = -\frac{\gamma}{m}v = -\frac{\gamma}{m}\frac{dx}{dt},
+\end{equation}
+onde $m$ é a massa da partícula. Suponha que esse objeto percorra o eixo $x$ negativo com uma velocidade $v_0$ na direção positiva. Vamos assumir que para o eixo $x$ negativo não há força de atrito alguma e que para $x > 0$ o objeto entre numa região com uma força de atrito descrita pela relação \eqref{atrito}. Você pode imaginar, por exemplo, que ao passar pela origem $x = 0$, a partícula entrou em algum gás ou que agora uma parte do solo possua ranhuras que geram atrito. A posição $x(t)$ para o eixo $x$ positivo é dada por
+\begin{equation}
+    x(t) = \frac{v_0 m}{\gamma}\left( 1 - e^{-\frac{\gamma}{m}t} \right).
+    \label{xt}
+\end{equation}
+É fácil notar pela relação acima que, após um longo período de tempo (comparado com $m/\gamma$), a partícula fica estacionária na posição $D = v_0 m/\gamma$. Quanto maior o valor do coeficiente de atrito $\gamma$, menor é a posição estacionária com relação à origem $x = 0$, o que faz sentido. A energia cinética da partícula é calculada facilmente
+\begin{equation}
+    K(t) = \frac{mv(t)^2}{2} = \frac{mv_0^2}{2}e^{-\frac{2\gamma}{m}t} = K_0 e^{-\frac{2\gamma}{m}t} \rightarrow 0,
+\end{equation}
+onde $K_0$ é a energia cinética inicial. Como esperado, a energia cinética da partícula varia e é nula após um longo período de tempo.
+
+A grande sutileza por trás desse problema é que obtemos um processo irreversível! Não esperamos de forma alguma que, após um certo tempo, a partícula simplesmente comece a se movimentar na direção da origem. Para tornar esse ponto mais quantitativo, considere a função de reversão temporal $x^* (t)$ obtida a partir da solução \eqref{xt} com $t\rightarrow -t$:
+\begin{equation}
+    x^* (t) = x(-t).
+\end{equation}
+É fácil demonstrar, e deve ser demonstrado pelo aluno a partir da lista de exercícios, que
+\begin{equation}
+    \frac{d^2 x^*}{dt^2} \neq -\frac{\gamma}{m}\frac{dx^*}{dt},
+\end{equation}
+O estudante que não está acostumado com as ideias de reversão temporal na mecânica clássica pode achar que qualquer função $x^* (t)$ definida a partir da solução $x(t)$ trocando $t\rightarrow -t$ de um problema mecânico não irá satisfazer a equação de Newton. Essa situação não representa um caso geral. No oscilador harmônico simples \textbf{não-amortecido}, por exemplo, com uma constante da mola $k$, sabemos que a segunda lei de Newton é dada por
+\begin{equation}
+    \frac{d^2 x}{dt^2 } + \frac{k}{m}x = 0
+\end{equation}
+e a solução geral vale $x(t) = A\cos(\omega t + \phi)$, onde $\omega = \sqrt{k/m}$. Se definirmos mais uma vez a função ``reversa'' $x^* (t) = x(-t)$ é fácil mostrar que ela satisfaz a equação $d^2 x^* (t) / dt^2 + (k/m)x^* = 0$. Porém, se adicionarmos a força dissipativa \eqref{atrito} no sistema massa-mola, pode-se demonstrar que a função $x^* (t)$ não satisfaz mais a segunda lei de Newton. E, claro, no oscilador harmônico dissipativo, assim como no exemplo anterior, não esperamos que a massa presa à mola simplesmente comece a se movimentar após um certo período de tempo em que ficou estacionária. Assim, \textbf{processos dissipativos e a irreversibilidade do movimento formam uma simbiose} presente na grande maioria dos sistemas dinâmicos clássicos e quânticos. Iremos explorar essa relação com mais profundidade quando discutirmos sobre a equação mestra na seção 5.
+
+
+
+\section{Dissipação em sistemas quânticos}
+
+Vimos na seção anterior que a inclusão de uma força dissipativa num sistema clássico leva à trajetórias irreversíveis. Esse ponto sutil e muito importante intrigou vários cientistas porque as equações de Newton são invariantes sob reversão temporal. Como é possível um conjunto de equações invariantes sob a operação $t\rightarrow -t$ descrever fenômenos que não possuem reversão temporal? Para entender como as equações de Newton são consistentes com a realidade, incluindo efeitos de dissipação, consideramos um exemplo ilustrando as origem microscópica da fricção. Considere o movimento de uma partícula $A$ grande através de um gás (formado por moléculas, assumimos, muito menores). A partícula $A$ está sob colisões constantes das moléculas, e essas colisões são a origem microscópica da força de atrito sentida pela partícula $A$. Essas colisões conservam a energia e o momento \textbf{total} do sistema, mas transferem energia resultante apenas da partícula $A$ para as moléculas do gás. A dinâmica do sistema total é reversível e Newtoniana. O conceito de dissipação e sua associação com a irreversibilidade do processo existe apenas nas nossas mentes. Nós não desejamos, ou conseguimos, seguir as milhares de moléculas presentes no gás. Queremos apenas seguir o movimento da partícula $A$ e compreender sua dinâmica a partir da posição e velocidade. \textbf{Dissipação e irreversibilidade aparecem somente porque desprezamos os graus de liberdade associados com as moléculas do gás.}
+
+Isso sugere que a descrição quântica correta de um sistema dissipativo caracterizado por poucos graus de liberdade deve formalmente incluir \textbf{infinitos} outros graus de liberdade presentes fora do sistema considerado que irão absorver, ou dissipar, a energia do sistema. Esses graus de liberdade extras para onde a energia é dissipada são chamados de \textbf{ambiente} ou \textbf{reservatório}. No exemplo tratado na seção anterior, todos os graus de liberdade estavam incorporados na constante de atrito $\gamma$, que caracteriza a força dissipativa. Assim, inevitavelmente, se quisermos estudar dissipação em sistemas quânticos teremos que levar em conta sistemas com um número muito grande de graus de liberdade. Ainda mais, sabemos que um \textit{ensemble} na mecânica quântica, caracterizando um conjunto de estados, pode ser misto ou puro. A grandeza necessária para tratar sistemas quânticos por esse ponto de vista é o operador densidade.
+
+\subsection{Por que não quantizar diretamente?}
+
+O estudante pode, corretamente, questionar o por quê de não utilizar o processo de quantização diretamente nas equações clássicas do movimento. Considere o oscilador harmônico clássico simples dado pelo Hamiltoniano
+\begin{equation}
+    H = \frac{p^2}{2m} + \frac{1}{2}m\omega^2 x^2
+\end{equation}
+cujas equações do movimento são
+\begin{equation}
+    \frac{dx}{dt} = \frac{p}{m}, \hspace{0.5cm} \frac{dp}{dt}=-m\omega^2 x
+\end{equation}
+que se torna um oscilador harmônico amortecido se incluirmos a força dissipativa \eqref{atrito}
+\begin{equation}
+    \frac{dx}{dt} = \frac{p}{m}, \hspace{0.5cm} \frac{dp}{dt}=-\gamma v-m\omega^2 x
+\end{equation}
+donde segue a equação familiar para a posição,
+\begin{equation}
+    \frac{d^2 x}{dt^2} + \frac{\gamma}{m} \frac{dx}{dt} + \omega^2 x = 0.
+\end{equation}
+Não podemos simplesmente transferir essa abordagem para o oscilador harmônico quântico amortecido? Para quantizar, precisamos transformar a posição $x$ no \textbf{operador} posição $X$ e o momento $p$ no \textbf{operador} momento $P$. A equação de Heisenberg do movimento para $X$ e $P$ com o Hamiltoniano quantizado é
+\begin{equation}
+    H = \frac{P^2}{2m} + \frac{1}{2}m\omega^2 X^2,
+\end{equation}
+utilizando a relação de comutação fundamental $[X,P] = i\hbar$, vale
+\begin{equation}
+    \frac{dX}{dt} == \frac{1}{i\hbar}[X,H] = \frac{P}{m}, \hspace{0.5cm} \frac{dP}{dt} = \frac{1}{i\hbar}[P,H] = -m\omega^2 X
+\end{equation}
+que são relações idênticas às equações clássicas do movimento. Assim, a análise sugere adicionar o termo dissipativo $-\gamma dX/dt$ na equação do movimento do operador $P$:
+\begin{equation}
+    \frac{dP}{dt} = -m\omega^2 X - \gamma \frac{dX}{dt}.
+\end{equation}
+E parece que estamos indo bem. Entretanto, considere a evolução temporal da relação fundamental de comutação entre a posição e o momento
+\begin{equation}
+    \frac{d}{dt}[X,P] = - \frac{\gamma}{m}[X,P]
+\end{equation}
+como pode ser facilmente verificado. Isso implica que
+\begin{equation}
+    [X(t),P(t)] = e^{-\gamma t /m}[X(0),P(0)] = i\hbar e^{-\gamma t /m}
+\end{equation}
+e violamos uma das leis mais fundamentais da mecânica quântica! Após um longo período de tempo, o operador posição irá comutar com o operador momento. Isso viola o princípio da incerteza de Heinsenberg. Durante o progresso do estudo da dissipação em sistemas quânticos, vários formalismos foram desenvolvidos para resolver esse problema. Não iremos considerar esse ponto de vista na aula. Isto é, não estamos interessados em modificar o Hamiltoniano do sistema para satisfazer as regras da mecânica quântica. Iremos adotar uma nova abordagem que foi bastante utilizada no estudo do laser, descoberto na década de 60, e que hoje desempenha um papel muito importante também na física da matéria condensada.
+
+
+\section{A equação mestra}
+
+Como discutido nas seções anteriores, precisamos considerar todos os graus de liberdade envolvidos na dinâmica do sistema para descrever processos dissipativos. Iremos demonstrar um dos métodos existentes para lidar com dissipação utilizando o operador densidade. Para isso, considere um sistema completamente arbitrário, com poucos graus de liberdade, interagindo com o ambiente, que possui muitos graus de liberdade em comparação com o sistema. Se o sistema for caracterizado pela letra $S$ e o ambiente pela letra $R$ então o Hamiltoniano global $S+ R$ pode ser escrito como
+\begin{equation}
+    H = H_S + H_R + H_{SR},
+    \label{hamiltoniano}
+\end{equation}
+onde $H_S$ é o Hamiltoniano descrevendo o sistema, $H_R$ é o Hamiltoniano descrevendo o ambiente e $H_{SR}$ é o Hamiltoniano descrevendo as interações entre o sistema e o ambiente. A introdução de um Hamiltoniano de interação entre o sistema e um ambiente com muitos graus de liberdade é o que dá origem aos processos dissipativos do sistema, como iremos ver. 
+
+Como o sistema global é formado por duas partes, $S$ e $R$, e como não estamos interessados com o que acontece no ambiente, precisamos de uma maneira de nos livrar das variáveis do ambiente. Isso gera portanto um objetivo contraditório. Por um lado nós precisamos dos infinitos graus de liberdade do ambiente para observar dissipação, por outro lado queremos nos livrar desses graus o mais rápido possível! A maneira mais elegante de fazer isso é utilizando o operador densidade. Vamos denotar o operador densidade do sistema global como
+\begin{equation}
+    \rho_{SR}(t) = \text{ operador densidade do sistema global } S + R
+\end{equation}
+e definir o operador densidade do sistema $S$ por
+\begin{equation}
+    \rho_S (t) = \text{Tr}_R [ \rho_{SR}(t) ] = \text{ operador densidade do sistema } S.
+\end{equation}
+É através do traço tomado no operador densidade do sistema global com relação às variáveis do ambiente que nos livramos dos infinitos graus de liberdade do ambiente, como indica a relação acima. O grande objetivo portanto é derivar, a partir da equação de Schrödinger, uma equação de evolução para o operador densidade do sistema incluindo propriedades do ambiente como parâmetros na equação final. Tal equação é conhecida como \textbf{equação mestra}. Conhecendo o operador densidade do sistema no tempo $t$ nos permite calcular o valor esperado de qualquer observável $A$ associado ao sistema utilizando 
+\begin{equation}
+    \langle A \rangle = \text{Tr}_S (\rho_S A).
+\end{equation}
+
+Infelizmente o processo de derivação da equação mestra a partir da equação de Schrödinger é bastante complicado e permeado por várias aproximações que não cabem discutir num nível de graduação. Assim, mostraremos apenas a equação mestra resultante e discutiremos alguns dos seus limites de aplicabilidade. A equação mestra é dada por
+\begin{empheq}[box=\tcbhighmath]{equation}
+    \frac{d\tilde{\rho}_S}{dt} = - \frac{1}{\hbar^2}\int_0^t dt' \text{Tr}_R\left\{ [\tilde{H}_{SR}(t),[\tilde{H}_{SR}(t'),\tilde{\rho}_S (t)\rho_R (0)]]  \right\},
+    \label{master}
+\end{empheq}
+onde $\tilde{\rho}_S$ e $\tilde{H}_{SR}$ são os operadores densidade $\rho_S$ e o Hamiltoniano de interação $H_{SR}$ na \textbf{representação de interação}
+\begin{equation}
+    \tilde{\rho}_S(t) = e^{(i/\hbar)H_S t}\rho_Se^{(-i/\hbar)H_S t},
+\end{equation}
+\begin{equation}
+    \tilde{H}_{SR}(t) = e^{(i/\hbar)(H_S + H_R) t}H_{SR}e^{(-i/\hbar)(H_S+H_R) t}.
+\end{equation}
+Duas aproximações importantes foram envolvidas na derivação da equação \eqref{master}:
+\begin{itemize}
+    \item Aproximação de Born.
+    \item Aproximação de Markov.
+\end{itemize}
+A aproximação de Born consiste em supor que o operador densidade (na representação de interação) é dado por
+\begin{equation}
+    \tilde{\rho}_{SR} (t) \approx \tilde{\rho}_S (t)\rho_R (0).
+\end{equation}
+Em palavras, o acoplamento entre o ambiente e o sistema é relativamente fraco. O operador densidade do reservatório permanece praticamente estacionário com o valor inicial em $t = 0$. Como a representação de interação é a mesma que a de Heisenberg ou Schrödinger em $t = 0$, não é preciso colocar um til no operador densidade $\rho_R (0)$. A aproximação de Markov consiste em assumir que o sistema não possui memória. Para compreender melhor a física por trás dessa premissa, imagine que o sistema $S$ responde à algum estimulo. Essa resposta será recebida pelo ambiente $R$ e, por sua vez, pode influenciar o próprio sistema $S$. Assim, essa última influência sentida pelo sistema foi gerada na verdade num tempo anterior pelo próprio sistema $S$. Temos portanto uma relação entre o tempo de relaxamento do sistema $S$ e as correlações existentes no ambiente $R$. Uma análise mais profunda sobre a aproximação de Markov nos afasta do nível da aula e, para o aluno mais interessado, pode ser consultada as referências no plano de aula. Como esperado, a equação mestra representa processos irreversíveis para o sistema $S$, como iremos ver agora.
+
+
+
+
+
+
+
+\section{Oscilador harmônico quântico amortecido}
+
+Vamos demonstrar agora que a equação mestra descrita na seção anterior descreve corretamente o processo de dissipação que ocorre num sistema descrito por um oscilador harmônico em contato com o ambiente descrito por outros infinitos osciladores harmônicos. Assumimos aqui que o estudante teve um contato prévio com o oscilador harmônico quântico e está confortável com o uso dos operadores criação e aniquilação. O Hamiltoniano do sistema global, dado pela equação \eqref{hamiltoniano}, é assumido na forma
+\begin{equation}
+    H_S = \hbar\omega_0 a^\dagger a, \hspace{0.5cm} H_R = \sum_j \hbar\omega_j r_j^\dagger r_j, \hspace{0.5cm} H_{SR} = \sum_j \hbar(\kappa_j^* ar_j^\dagger + \kappa_j a^\dagger r_j).
+\end{equation}
+O Hamiltoniano do sistema $S$ consiste em apenas um modo oscilante de frequência $\omega_0$ e operadores de criação e aniquilação $a^\dagger$ e $a$, respectivamente. O Hamiltoniano para o reservatório consiste em um número infinito de osciladores com diferentes frequências $\omega_j$ e operadores de criação e aniquilação para o modo $j$ dados por $r_j^\dagger$ e $r_j$, respectivamente. O acoplamento entre o sistema e o reservatório é descrito pelo Hamiltoniano de acoplamento $H_{SR}$ que consiste nos parâmetros de acoplamento $\kappa_j$ entre o oscilador do sistema e o oscilador $j$. A forma assumida pelo acoplamento é bastante geral e se aplica à uma grande variedade de sistemas físicos. 
+
+O primeiro passo para utilizar a equação mestra é transformar os operadores acima para a representação de interação
+\begin{equation}
+    H_S \rightarrow \tilde{H}_S(t) \hspace{0.5cm} H_R \rightarrow \tilde{H}_R(t) \hspace{0.5cm}H_{SR} \rightarrow \tilde{H}_{SR}(t).
+\end{equation}
+Após obter os Hamiltonianos nessa representação, devemos substitui-los na equação mestra e efetuar as integrações. Infelizmente, esse procedimento é bastante complicado e vai além do nível desta aula. Assim, apenas apresentaremos o resultado final e discutiremos suas consequências e aproximações. O leitor que quiser se aprofundar nesse problema deve consultar a lista bibliográfica sugerida no plano de aula. O operador densidade do sistema, $\rho_S$, satisfaz
+\begin{equation}
+    \frac{d\rho_S}{dt} \approx \frac{1}{i\hbar}[H_S,\rho_S] + \frac{\gamma}{2}( [a,\rho a^\dagger] + [a\rho,a^\dagger] ) + \frac{\gamma}{2}\bar{n} ( [a^\dagger,\rho a] + [a\rho,a^\dagger] ).
+    \label{master2}
+\end{equation}
+Como foi dito nas seções anteriores, a equação que governa a evolução do operador densidade do sistema depende somente das variáveis do sistema, nesse caso $a$ e $a^\dagger$, e os parâmetros extras $\gamma$ e $\bar{n}$ dependem das propriedades do reservatório. O parâmetro $\gamma$ é a \textbf{constante de dissipação} e $\bar{n}$ representa o número médio de partículas que ocupam cada oscilador no reservatório, dada pela conhecida distribuição
+\begin{equation}
+\bar{n}(\omega_0) = \frac{e^{-\frac{\hbar\omega_0}{k_B T}}}{1 - e^{-\frac{\hbar\omega_0}{k_B T}}}  .  
+\end{equation}
+A estrutura da equação \eqref{master2} é muito interessante porque o primeiro termo do lado direito da equação representa a evolução do operador densidade sem nenhuma interação com as partes fora do sistema. Todo o resto da equação, proporcional ao parâmetro dissipativo $\gamma$, descreve o processo dissipativo e irreversível. Podemos utilizar a equação diferencial $\eqref{master2}$ para estudar a evolução de qualquer variável dinâmica associada ao sistema $S$. Por exemplo, o número médio de partículas no modo $\omega_0$ do sistema $S$, dado por $\langle n \rangle = \langle a^\dagger a \rangle$, satisfaz
+\begin{equation}
+    \frac{d \langle n \rangle}{dt} = -\gamma (\langle n \rangle - \bar{n})
+\end{equation}
+cuja solução é dada por
+\begin{empheq}[box=\tcbhighmath]{equation}
+    \langle n(t) \rangle = \langle n(0) \rangle e^{-\gamma t} + \bar{n}(1 - e^{-\gamma t}).
+\end{empheq}
+Assim, se o oscilador harmônico do sistema tiver um número médio inicial de $\langle n(0) \rangle$, após um tempo muito maior que $1/\gamma$ teremos a condição irreversível de equilíbrio $ \langle n(t) \rangle \rightarrow \bar{n}(\omega_0) $.
+
+O modelo descrito nessa seção pode ser utilizado para descrever o campo eletromagnético dentro de uma cavidade laser. A cavidade que contém a radiação laser não pode ser completamente isolada pois queremos utilizar a luz coerente para outros processos. Dessa forma, os espelhos que formam a cavidade permitem uma pequena passagem da radiação. Em termos mais gerais temos exatamente o sistema descrito acima. O oscilador harmônico com frequência $\omega_0$ pode ser visto como o modo do campo eletromagnético excitado dentro da cavidade e o ambiente ou reservatório pode ser tomado como os modos dos átomos nas paredes da cavidade ou até mesmo os infinitos modos existentes fora da cavidade, que também interagem com a radiação. Assim, apesar da natureza generalizada do modelo, é possível aplicá-lo numa variedade de situações de interesse.
+
+\section{Emissão espontânea de um átomo de dois níveis}
+
+Vamos considerar agora um outro exemplo. Um átomo com dois níveis colocado no espaço livre decai (se o átomo estiver excitado) para o estado fundamental após um certo período de tempo. Esse fenômeno, chamado de \textbf{emissão espontânea}, pode ser estudado utilizando a equação mestra. Considere um átomo de dois níveis com autoestados de energia $\ket{1}$ e $\ket{2}$ com energias $E_1 = -\hbar\omega_0/2$ e $E_1 = +\hbar\omega_0/2$. O Hamiltoniano do sistema $S$ nesse caso vale
+\begin{equation}
+    H_S = \sum_{ij}\ket{i}\braket{i|H_S|j}\bra{j} = \frac{1}{2}\hbar\omega_0\sigma_z \hspace{0.25cm} \text{ onde } \hspace{0.25cm} \sigma_z = \ket{2}\bra{2} - \ket{1}\bra{1} .
+\end{equation}
+É útil também definir os operadores de excitação e aniquilação atômicos na forma
+\begin{equation}
+    \sigma_{-} = \ket{1}\bra{2} \hspace{0.25cm} \text{ e } \hspace{0.25cm} \sigma_{+} = \ket{2}\bra{1},
+\end{equation}
+onde o operador $\sigma_-$ tem a ação de levar o átomo excitado no nível 2 para o nível 1 e o operador $\sigma_+$ faz o processo inverso. Para o Hamiltoniano do reservatório, tomamos uma coleção de osciladores harmônicos \textbf{no estado fundamental}, isto é, com $\bar{n} = 0$. O leitor deve lembrar que o vácuo possui flutuações descritas pelo estado fundamental do oscilador harmônico. Assim, nossa análise assume que existem vários osciladores com diferentes frequências $\omega_j$ mas que nenhuma partícula ou fóton ocupa os modos, apenas o vácuo. O Hamiltoniano do reservatório é dado pela mesma forma da seção anterior
+\begin{equation}
+    H_R = \sum_j \hbar\omega_j r_j^\dagger r_j
+\end{equation}
+e o Hamiltoniano da interação entre o átomo de dois níveis e o reservatório pode ser escrito como
+\begin{equation}
+H_{SR} = \sum_j \hbar(\kappa_j^* \sigma_- r_j^\dagger + \kappa_j \sigma_+ r_j).
+\end{equation}
+Note que a única mudança que fizemos no Hamiltoniano $H_{SR}$ do sistema átomo-campo com relação ao Hamiltoniano de interação da seção anterior foi a troca $a\rightarrow \sigma_-$ e $a^\dagger \rightarrow \sigma_+$. Podemos seguir a análise da mesma forma que na seção anterior, calculando o Hamiltoniano na representação de interação, etc. Iremos pular os detalhes da derivação mas é possível demonstrar que as probabilidades de encontrar o átomo no estado excitado $P_2 = \braket{2|\rho_S|2}$ e no estado fundamental $P_1 = \braket{1|\rho_S|1}$, dadas pelos elementos diagonais da matriz densidade do sistema, são regidas pelas equações 
+\begin{equation}
+    \frac{d P_2}{dt} = -\gamma P_2 \hspace{0.25cm} \text{ e } \hspace{0.25cm} \frac{d P_1}{dt} = \gamma P_2,
+\end{equation}
+onde $\gamma$ é a constante de dissipação (é geralmente diferente do $\gamma$ da seção anterior). Se assumirmos que inicialmente o átomo está no estado excitado $\ket{2}$ então $P_2(0) = 1$ e $P_1(0) = 0$. A solução geral do sistema acima é facilmente calculada
+\begin{equation}
+    P_2(t) = e^{-\gamma t} \hspace{0.25cm} \text{ e } \hspace{0.25cm} P_1(t) = 1 - e^{-\gamma t}
+\end{equation}
+e representam, simplesmente, o \textbf{processo irreversível} do átomo decaindo do estado excitado $\ket{2}$ para o estado fundamental $\ket{1}$. A energia cedida no processo foi absorvida pelo ambiente, constituido pelos osciladores harmônicos.
+
+Esse exemplo é muito interessante porque à medida em que diminuímos o número de osciladores no reservatório, começamos a obter um processo reversível. Se o átomo interage com apenas um outro modo do campo, é possível mostrar que durante a evolução temporal o átomo absorve e emite um fóton de energia de uma maneira periódica. Esse fenômeno é conhecido como \textit{oscilação de Rabi}.
+
+
+
+
+\section{Conclusões}
+
+Vimos nesta aula que o estudo da dissipação em processos quânticos depende crucialmente da interação do sistema com o ambiente na qual ele está inserido e que, por sua vez, interage com o sistema. A grandeza útil para estudar esse fenômeno é o operador densidade e demonstramos que o mesmo satisfaz uma equação mestra aplicável em situações onde a aproximação de Born e de Markov sejam válidas. Dois exemplos foram utilizados para demonstrar a dinâmica descrita pela equação mestra. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,295 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx,caption}
+\usepackage[a4paper, margin=1in]{geometry}
+\linespread{1.15}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+\usepackage[margin=3cm]{caption}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{braket}
+\usepackage{mathtools}
+
+\usepackage{xcolor,sectsty}
+\definecolor{astral}{RGB}{46,116,181}
+\subsectionfont{\color{astral}}
+\sectionfont{\color{astral}}
+
+\title{\includegraphics[width=0.1\textwidth]{ufallogo.png} \\
+\Huge{\color{astral}\textbf{Segunda Quantização}}}
+
+%\title{\Huge{\color{astral}\textbf{Sistemas Quânticos Não-Hermitianos}}}
+
+\author{Paulo Brandão}
+\date{Maio de 2017}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
+\newcommand*{\bfrac}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução e Objetivos da Aula}
+
+O estado de uma única partícula cuja dinâmica seja regida pelas leis da mecânica quântica pode ser descrito de várias formas. Uma delas, e é a forma na qual o estudante tem seu primeiro contato, é através da função de onda $\psi$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Partículas Distinguíveis e Indistinguíveis}
+
+É sempre possível identificar a trajetória de uma ``partícula clássica'', isto é, uma partícula regida pelas leis da mecânica Newtoniana. Imagine uma piscina com $N$ bolinhas dessas que as crianças se divertem num shopping ou numa festa. Vamos supor que queremos estudar a trajetória da bolinha número 4 que tem uma certa posição inicial $\mathbf{r}(0)$ antes das crianças pularem na piscina. Podemos fazer isso de várias maneiras. Por exemplo, podemos simplesmente pintar o número 4 na bolinha de interesse (de forma que a pintura não interfira na dinâmica) e simplesmente observar sua posição $\mathbf{r}(t)$ no decorrer do tempo. Ao final da festa, ela terá se chocado com várias outras bolinhas de uma forma bastante errática, porém sua trajetória será bem definida e conseguiremos identificar sua posição em qualquer instante de tempo.
+
+Essa identificação da trajetória de uma partícula para qualquer instante de tempo $t$ quando a mesma interage com outros objetos não é possível na descrição quântica do movimento. É bem conhecido que um elétron, por exemplo, é descrito por uma função de onda e que apenas podemos conhecer a probabilidade de encontrá-lo em uma determinada região num certo intervalo de tempo. Pior ainda, a função de onda do elétron pode interagir (se sobrepor) com outras funções de ondas de outros elétrons e a probabilidade de se encontrar o elétron inicial numa certa região perde o sentido. O conceito de \textit{trajetória} não é definido na mecânica quântica quando há partículas interagentes próximas uma das outras (e até mesmo para uma única partícula livre de interações). ``Partículas quânticas'' são completamente indistinguíveis umas das outras (além de possuir a mesma carga, spin, massa, etc). Queremos estudar inicialmente as consequências dessa propriedade fundamental das partículas.
+
+Suponha que $\ket{\Psi}$ seja um ket de estado que representa $n$ partículas idênticas. Então, a função de onda do estado é
+\begin{equation}
+    \psi(1,2,...,i,...,n) = \braket{1,2,...,i,...,n|\Psi},
+\end{equation}
+onde utilizamos o índice $i$ para denotar as coordenadas espaciais $\mathbf{r}$ e o spin $s$. Usaremos a fala ``primeira partícula'' para se referir à partícula descrita pelo primeiro argumento de $\psi$, no caso 1, e assim por diante. Assim, $\psi(1,2,...,i,...,n)$ representa a amplitude de se encontrar a partícula 1 na posição $\mathbf{r}_1$ com spin $s_1$, a partícula 2 na posição $\mathbf{r}_2$ com spin $s_2$ e assim por diante. É importante ficar atento ao uso dessas convenções. Por exemplo, considerando duas partículas apenas, $\psi(2,1)$ significa a amplitude de encontrar a partícula 1 na posição $\mathbf{r}_2$ com spin $s_2$ e a partícula 2 na posição $\mathbf{r}_1$ com spin $s_1$. Dizer que as partículas são idênticas significa dizer que não existem interações que possam distingui-las. Assim, qualquer operador correspondente a um observável físico deve tratar todas as partículas de uma maneira equivalente. O Hamiltoniano de $n$ partículas livres de massa $m$, por exemplo, é
+\begin{equation}
+    H_{0}(1,2,...,n) = \frac{p_1^2}{2m} +\frac{p_2^2}{2m} + ... +\frac{p_n^2}{2m}  
+\end{equation}
+que é claramente simétrico sob a troca de $\mathbf{p}_i$ com $\mathbf{p}_j$. Em geral, qualquer observável $A(1,2,...,n)$ deve ser uma função simétrica dos índices $1,2,..., n$.
+
+
+\section{Permutações e Simetria}
+
+É útil introduzir operadores que façam permutações nas partículas. Vamos definir o operador permutação $P_{ij}$ tal que quando ele atua no ket $\ket{\Psi}$, troca o estado $i$ com o $j$. Em termos da função de onda
+\begin{equation}
+    \braket{1,2,...,i,...j,...,n|P_{ij}|\Psi} = \braket{1,2,...,j,...i,...,n|\Psi}
+\end{equation}
+ou, utilizando a mesma notaçao $P_{ij}$ para o operador permutação na base posição,
+\begin{equation}
+    P_{ij}\psi(1,2,...,i,...,j,...,n) = \psi(1,2,...,j,...,i,...,n).
+\end{equation}
+Em palavras, o operador permutação cria a amplitude de observar a partícula $i$ na posição $\mathbf{r}_j$ com spin $s_j$ e a partícula $j$ na posição $\mathbf{r}_i$ com spin $s_i$. Assim, para um observável $A$ devemos ter
+\begin{equation}
+    PA = AP \hspace{0.5cm} \text{ou} \hspace{0.5cm} PAP^{-1} = A
+\end{equation}
+onde $P$ é qualquer permutação. Claramente, a inversa de $P_{ij}$ é $P_{ji}$ como pode ser facilmente verificado.
+
+Suponha que $\ket{\Psi}$ é um autoestado de um Hamiltoniano $H(1,2,...,n)$ com energia $E$. Então, como $H$ comuta com qualquer permutação $P$, temos
+\begin{equation}
+    HP\ket{\Psi} = PH\ket{\Psi} = PE\ket{\Psi} = EP\ket{\Psi}.
+\end{equation}
+Assim, $P\ket{\Psi}$ também é um autoestado do Hamiltoniano $H$ com a mesma energia $E$. Se $P\ket{\Phi}$ não é o mesmo estado que $\Psi$ então temos dois estados diferentes com a mesma energia, ou seja, temos degenerescência. Esse fenômeno é conhecido como \textbf{degenerescência de troca} (\textit{exchange degeneracy}). Considere um sistema formado por apenas duas partículas idênticas. Então $P_{12}$ comuta com $H(1,2)$ e podemos procurar os autoestados de $H$ que são autoestados simultâneos de $P_{12}$. Como $P_{12}^{2} = 1$, os autovalores do operador permutação são $\pm 1$. Se $\psi(1,2)$ é qualquer autoestado de $H$ com energia $E$, então
+\begin{equation}
+    \psi_S(1,2) = \psi(1,2) + \psi(2,1)
+\end{equation}
+é um autostado de $H$ com a mesma energia $E$ e também é um autoestado de $P_{12}$ com autovalor $+1$:
+\begin{equation}
+    H\psi_S(1,2) = H\psi(1,2) + H\psi(2,1) = E\psi(1,2) + E\psi(2,1) = E\psi_S(1,2)
+\end{equation}
+\begin{equation}
+    P_{12}\psi_S(1,2) = P_{12}\psi(1,2) + P_{12}\psi(2,1) = \psi(2,1) + \psi(1,2) = (+1)\psi_S(1,2).
+\end{equation}
+Similarmente, a combinação antissimétrica
+\begin{equation}
+    \psi_A (1,2) = \psi(1,2) - \psi(2,1)
+\end{equation}
+é autoestado de $H$ com a mesma energia $E$ e autoestado de $P_{12}$ com autovalor $-1$:
+\begin{equation}
+    H\psi_A(1,2) = H\psi(1,2) - H\psi(2,1) = E\psi(1,2) - E\psi(2,1) = E\psi_A(1,2)
+\end{equation}
+\begin{equation}
+    P_{12}\psi_A(1,2) = P_{12}\psi(1,2) - P_{12}\psi(2,1) = \psi(2,1) - \psi(1,2) = (-1)\psi_A(1,2).
+\end{equation}
+Uma das grandes descobertas da física é o fato de que:
+
+
+\begin{center}
+
+\noindent\rule{16cm}{0.4pt}
+
+\textbf{Um par de partículas idênticas sempre terá uma função de onda que também é um autoestado de} $P_{12}$ \textbf{e, além disso, os autovalores} $\pm 1$ \textbf{dependem apenas dos tipos de partículas envolvidas.}
+
+\noindent\rule{16cm}{0.4pt}
+
+\end{center}
+Por exemplo, para um par de elétrons devemos ter uma função de onda do sistema \textbf{sempre} antissimétrica enquanto que para um par de méson $\pi^0$ a função de onda deve ser simétrica. Se ao permutar duas partículas do sistema a função de onda for antissimétrica, dizemos que as partículas são \textbf{férmions}. Partículas cujo estado é simétrico sob a permutação de duas partículas são chamadas de \textbf{bósons}. De fato, existe uma conexão geral entre o spin da partícula e a possível simetria do estado sob permutação:
+
+\begin{center}
+
+\noindent\rule{16cm}{0.4pt}
+
+ \textbf{Partículas com spin inteiro são sempre bósons e partículas com spin fracionário são sempre férmions}.
+
+\noindent\rule{16cm}{0.4pt}
+
+\end{center}
+Essa conexão entre spin e a simetria de permutação (que dará origem à estatística de distribuição de partículas nos níveis de energias do sistema) não pode ser provada no contexto da mecânica quântica não-relativística. Na mecânica quântica \textit{relativística} essa conexão é na verdade um teorema que pode ser provado.
+
+Os resultados anteriores se estendem para um sistema formado por $n$ férmions idênticos (isto é, $n$ elétrons ou $n$ prótons)
+\begin{equation}
+    P_{ij}\psi(1,...,i,...,j,...,n) = -\psi(1,...,i,...,j,...,n)
+\end{equation}
+e para $n$ bósons idênticos
+\begin{equation}
+    P_{ij}\psi(1,...,i,...,j,...,n) = +\psi(1,...,i,...,j,...,n).
+\end{equation}
+Assim, a função de onda para os 47 elétrons num átomo de prata é uma função de onda antissimétrica das coordenadas espaciais e do spin dos elétrons. Observe também que a função de onda não pode mudar sua simetria durante a evolução temporal porque o operador permutação $P_{ij}$ comuta com o Hamiltoniano e é, portanto, uma constante do movimento. Uma função de onda inicialmente antissimétrica permanecerá antissimétrica no decorrer do tempo e o mesmo acontece para uma função de onda inicialmente simétrica.
+
+Temos agora um problema. Quando estudamos as propriedades de um único elétron localizado nas dependências da UFAL, por exemplo, não deveríamos levar em conta o fato de existirem outros elétrons ao redor do mundo e que deveríamos incluir todos eles para descrever a função de onda antissimétrica do sistema? Como é que a função de onda de um único elétron que estudamos no início dos cursos em teoria quântica descreve corretamente a dinâmica do sistema se ignoramos sua função de onda antissimétrica? A resposta é que se não existe praticamente nenhuma sobreposição da função de onda do ``nosso'' elétron com as funções de ondas dos outros elétrons, nós não precisamos nos preocupar em construir uma função de onda antissimétrica. Para demonstrar esse fato de uma maneira mais quantitativa, o estudante deverá resolver os problemas propostos na lista de exercício. A regra é que devemos escrever funções de ondas simétricas ou antissimétricas apenas para as partículas relevantes ao sistema considerado. Se não existe a chance de uma sobreposição entre funções de onda, não precisamos nos preocupar em simetrizar ou não o estado do sistema.
+
+\subsection{Sistemas compostos por férmions e bósons}
+
+Para finalizar a discussão sobre permutação e simetria, devemos discutir um pouco sobre as funções de onda de sistemas com partículas compostas. Considere a função de onda de um sistema formado por dois átomos de Hidrogênio (ignorando os spins)
+\begin{equation}
+    \psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2),
+\end{equation}
+onde $\mathbf{r}^e_i$ é a posição do elétron no átomo $i$ e $\mathbf{r}^p_i$ a posição do próton no átomo $i$. A função de onda $\psi$ deve trocar de sinal com a mudança das coordenadas dos dois elétrons
+\begin{equation}
+    P_{12}^e \psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2) = -\psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2).
+\end{equation}
+A função de onda também deve mudar de sinal se trocarmos a posição dos dois prótons, pois eles também são férmions
+\begin{equation}
+    P_{12}^p \psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2) = -\psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2).
+\end{equation}
+A função de onda, porém, \textbf{não} deve mudar de sinal se trocarmos a posição de um elétron com um próton pois eles não são partículas idênticas. Se trocarmos as posições dos elétrons e dos prótons nos dois átomos de Hidrogênio ficamos com
+\begin{equation}
+    P_{12}^p P_{12}^e \psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2) = \psi(\mathbf{r}^e_1,\mathbf{r}^p_1,\mathbf{r}^e_2,\mathbf{r}^p_2),
+\end{equation}
+ou seja, a função de onda do sistema não muda. Assim, átomos de Hidrogênio se comportam como bósons mesmo tendo férmions como partículas constituintes. A regra geral é: Sistemas compostos por um número par de férmions e qualquer número de bósons devem se comportar como bósons, e sistemas compostos por um número ímpar de férmions e qualquer número de bósons devem se comportar como férmions. Por exemplo, átomos de He$^4$, contendo dois prótons, dois nêutrons e dois elétrons são bósons. Átomos de He$^3$, por outro lado, contendo apenas um nêutron são férmions.
+
+\subsection{Princípio da Exclusão de Pauli}
+
+Considere um sistema formado por dois férmions idênticos, 1 e 2. A função de onda (não-normalizada) do sistema é antissimétrica e podemos escrever
+\begin{equation}
+    \psi_A(1,2) = \psi(1,2) - \psi(2,1)
+\end{equation}
+fica claro pela relação acima que se as duas partículas ocupam o mesmo estado então $\mathbf{r}_1 = \mathbf{r}_2$ e $s_1 = s_2$ e, consequentemente
+\begin{equation}
+    \psi_A = 0.
+\end{equation}
+Para três férmions idênticos
+\begin{equation}
+    \psi_A(1,2,3) =\frac{1}{\sqrt{3!}}[\psi(1,2,3) - \psi(1,3,2) -\psi(2,1,3) + \psi(2,3,1) - \psi(3,2,1) + \psi(3,1,2)]
+\end{equation}
+onde $\psi(i,j,k)$ são os autoestados de energia do Hamiltoniano $H(1,2,3)$. Se a partícula 1 e a partícula 2 estão no mesmo estado $a$, então
+\begin{equation}
+    \psi_A(1,2,3) =\frac{1}{\sqrt{3!}}[\psi(a,a,3) - \psi(a,a,2) -\psi(a,a,3) + \psi(a,a,1) - \psi(a,a,1) + \psi(a,a,2)] = 0.
+\end{equation}
+A função de onda para o sistema de três férmions idênticos também é nula se as partículas 2 e 3 estiverem no mesmo estado ou se a partículas 1 e 3 estiverem no mesmo estado. O caso geral para $n$ partículas pode ser facilmente deduzido a partir desses dois exemplos com $n = 2$ e $n = 3$. Concluímos então que se dois (ou mais) férmions se encontram no mesmo estado, a função de onda do sistema é nula. Em outras palavras, dois férmions idênticos não podem ocupar o mesmo estado quântico. Esse é o famoso \textbf{princípio da exclusão de Pauli}. Bósons, por outro lado, podem ocupar o mesmo estado quântico com qualquer número de partículas presentes no mesmo estado. O princípio da exclusão de Pauli não se aplica para bósons.
+
+
+\subsection{Normalização}
+
+Existe uma receita para escrever o estado simétrico ou antissimétrico de $n$ partículas idênticas. 
+
+
+
+%\section{Estados de Partículas Idênticas Não-Interagentes}
+
+
+
+\section{Segunda Quantização}
+
+Quando lidamos com sistemas que possuem um número muito pequeno de partículas, é relativamente fácil construir uma função de onda simétrica ou assimétrica, dependendo do tipo de simetria global do sistema. Essa tarefa se torna impraticável quando o número de partículas aumenta. Escrever a função de onda de um sistema de 1 mol de átomos de Hidrogênio, por exemplo, é uma tarefa praticamente impossível. Iremos descrever, nas próximas seções, um método muito elegante para tratar a dinâmica desses sistemas que leva em conta a simetria dos estados e dos operadores para sistemas de muitas partículas idênticas. Esse método, que é na verdade uma reformulação da equação de Schrödinger, é chamado de \textit{segunda quantização}.
+
+\subsection{Operadores de Aniquilação e Criação}
+
+Queremos caracterizar o estado de um sistema de partículas idênticas sem utilizar explicitamente a função de onda mas sim pelo número de partículas que ocupam um determinado estado. Em outras palavras, queremos uma nova \textbf{representação} para o estado do sistema físico que incorpore as propriedades de permutação descritas anteriormente e que facilite a análise matemática de alguma forma. É útil separar essa análise em dois casos dependendo se as funções de onda do sistema são simétricas (bósons) ou antissimétricas (férmions).
+
+\subsubsection{Bósons}
+
+Suponha que a resolvemos a equação de Schrödinger para um determinado potencial $V(\mathbf{r})$ e que as soluções estacionárias de uma única partícula são $\{ \phi_0(\mathbf{r})$, $\phi_1(\mathbf{r})$, $\phi_2(\mathbf{r}),...\}$. Se colocarmos $n_0$ bósons idênticos no estado fundamental $\phi_0$ designamos o estado do sistema por $\ket{n_0,0,0...}$. Se adicionarmos mais $n_1$ bósons no estado $\phi_1$, designamos o estado do sistema por $\ket{n_0,n_1,0,...}$ e assim por diante. Para uma distribuição arbitrária de $n_0$ bósons no estado $\phi_0$, $n_1$ bósons no estado $\phi_1$, $n_2$ bósons no estado $\phi_2$, etc, escrevemos
+\begin{equation}
+    \ket{n_0,n_1,n_2,...}.
+\end{equation}
+Assim, o estado $\ket{0,0,...}$ representa o vácuo, onde nenhuma partícula se encontra em nenhum estado do sistema e o estado $\ket{1,2,1,0,0,...}$ representa uma partícula no estado $\phi_0$, duas partículas no estado $\phi_1$, uma partícula no estado $\phi_3$ e todos os outros estados estão vazios. Trocamos assim a descrição do sistema através da função de onda pela enumeração do número de partículas que ocupam tais estados. Como bósons não satisfazem o princípio da exclusão de Pauli, podemos ter várias partículas num mesmo estado: $\ket{12,40000,2,0,0...}$.
+
+Vamos definir os operadores de criação e aniquilação da seguinte forma
+\begin{equation}
+    b_{i}^\dagger \ket{n_0,n_1,...,n_i,...} = \sqrt{n_i + 1}\ket{n_0,n_1,...,n_i+1,...},
+\end{equation}
+\begin{equation}
+    b_{i} \ket{n_0,n_1,...,n_i,...} = \sqrt{n_i}\ket{n_0,n_1,...,n_i-1,...},
+\end{equation}
+ou seja, $b_i^\dagger$ adiciona um bóson ao estado $\phi_i$ e $b_i$ remove um bóson do estado $\phi_i$. O aluno demonstrará na lista de exercício que uma consequência dessas definições é que
+\begin{equation}
+    [b_i,b_j^\dagger ] = \delta_{ij} \hspace{0.5cm} [b_i,b_j ] = [b_i^\dagger,b_j^\dagger ] = 0.
+\end{equation}
+Qualquer estado $\ket{n_0,n_1,...}$ pode ser construído a partir do vácuo pela aplicação dos operadores de criação:
+\begin{equation}
+    \ket{n_0,n_1,n_2,...} = ... \frac{(b_2^\dagger)^{n_2}}{\sqrt{n_2 !}}\frac{(b_1^\dagger)^{n_1}}{\sqrt{n_1 !}}\frac{(b_0^\dagger)^{n_0}}{\sqrt{n_0 !}}\ket{0,0,0,...}.
+\end{equation}
+
+\subsubsection{Férmions}
+
+Para um sistema formado por férmions, a história é um pouco diferente já que eles satisfazem o princípio da exclusão de Pauli. Dois férmions não podem ocupar o mesmo estado. Isso significa que um estado do tipo $\ket{n_0 = 2, n_1 = 1,n_2 = 3,...}$ é \textbf{proibido} pela natureza. Assim, considere apenas dois férmions idênticos. Os únicos estados possíveis em termos de $\ket{n_0,n_1,n_2,..}$ são estados do tipo
+\begin{equation}
+    \ket{1,1,0,...} \hspace{0.5cm} \ket{1,0,1,...} \hspace{0.5cm} \ket{0,1,1,...} \hspace{0.5cm} \ket{1,0,0,1,...} \hspace{0.5cm} \text{etc...}
+\end{equation}
+ou seja, $n_i = 0$ ou $1$ para todo $i$. Assim, diferente dos bósons, \textbf{sempre} devemos ter $c^{\dagger 2}_i = c^{2}_i = 0$ para férmions (onde $c$ é o operador de aniquilação e $c^\dagger$ o operador de criação). Com essas propriedades é possível demonstrar que as relações de entre os operadores para férmions são
+\begin{equation}
+    \{c_i,c_j^\dagger \} = \delta_{ij} \hspace{0.5cm} \{c_i,c_j \} = \{c_i^\dagger,c_j^\dagger \} = 0,
+\end{equation}
+onde $\{ A,B \} = AB + BA$ é o anticomutador de $A$ e $B$. A grande vantagem de descrever o sistema em termos dos estados $\ket{n_0,n_1,n_2,...}$ e dos operadores de criação e aniquilação é que \textbf{a natureza da relação de comutação satisfaz as propriedades de simetria da função de onda}. Isto é, o estado $\ket{\alpha} = c_1^{\dagger} c_2^\dagger \ket{0,0,...}$, com dois férmions, um no estado $\phi_0$ e o outro no estado $\phi_1$, é \textbf{automaticamente} antissimétrico:
+\begin{equation}
+    \begin{split}
+        P_{12}\ket{\alpha} &= P_{12}c_1^{\dagger} c_2^\dagger \ket{0,0,...} \\
+                           &= c_2^{\dagger} c_1^\dagger \ket{0,0,...} \\
+                           &= -c_1^{\dagger} c_2^\dagger \ket{0,0,...} \hspace{0.5cm} \text{pois} \hspace{0.5cm} c_1^\dagger c_2^\dagger + c_2^\dagger c_1^\dagger = 0 \\
+                           & = -\ket{\alpha}.
+    \end{split}
+\end{equation}
+Da mesma forma, na criação de dois bósons $\ket{\alpha} = b_1^{\dagger} b_2^\dagger \ket{0,0,...}$ é fácil verificar que o estado é simétrico: $P_{12}\ket{\alpha} = +\ket{\alpha}$ (veja lista de exercício).
+
+Em resumo, trocamos a representação através da função de onda simétrica ou antissimétrica $\psi$ de um sistema com $n$ partículas idênticas para a representação através do número de partículas que se encontram em cada estado. A informação da simetrização da função de onda está codificada através das relações de comutação dos operadores de criação e aniquilação para bósons e férmions.
+
+
+\subsection{Operadores de Campo}
+
+Vamos multiplicar a função de onda $\phi_0$ pelo operador aniquilação do mesmo estado $a_0$, a função de onda $\phi_1$ pelo operador aniquilação $a_1$ e assim por diante
+\begin{equation}
+    \phi_0(\mathbf{r})a_0 + \phi_1(\mathbf{r})a_1 + \phi_2(\mathbf{r})a_2 + ... = \sum_n \phi_n(\mathbf{r})a_n.
+\end{equation}
+A expressão acima é uma mistura de operadores que atuam no estado $\ket{n_0,n_1,...}$ e a base $\{ \phi_0(\mathbf{r})$, $\phi_1(\mathbf{r})$, $\phi_2(\mathbf{r}),...\}$. Da mesma forma, podemos formar a relaçao com operadores de criação $a^\dagger$
+\begin{equation}
+    \phi_0^* (\mathbf{r})a_0^\dagger + \phi_1^* (\mathbf{r})a_1^\dagger + \phi_2^* (\mathbf{r})a_2^\dagger + ... = \sum_n \phi_n^* (\mathbf{r})a_n^\dagger,
+\end{equation}
+onde foi tomado o complexo conjugado das funções da base. Definimos os \textbf{operadores de campo} $\hat{\psi}(\mathbf{r})$ e $\hat{\psi}^\dagger (\mathbf{r})$ por
+\begin{equation}
+    \hat{\psi}(\mathbf{r}) = \sum_n \phi_n(\mathbf{r})a_n \hspace{0.5cm} \text{e} \hspace{0.5cm} \hat{\psi}^\dagger (\mathbf{r}) = \sum_n \phi_n^* (\mathbf{r})a_n^\dagger.
+\end{equation}
+A notação $a$ ou $a^\dagger$ se torna $b$ e $b^\dagger$ ou $c$ e $c^\dagger$ dependendo do sistema considerado. Assim, é possível demonstrar que para bósons temos
+\begin{equation}
+    [\hat{\psi}(\mathbf{r}),\hat{\psi}^\dagger (\mathbf{r}')] = \delta(\mathbf{r}-\mathbf{r}') \hspace{0.5cm} \text{e} \hspace{0.5cm} [\hat{\psi}(\mathbf{r}),\hat{\psi} (\mathbf{r}')] = [\hat{\psi}^\dagger (\mathbf{r}),\hat{\psi}^\dagger (\mathbf{r}')]=0 \hspace{1cm} \text{(Bósons)}
+\end{equation}
+e para férmions
+\begin{equation}
+    \{\hat{\psi}(\mathbf{r}),\hat{\psi}^\dagger (\mathbf{r}')\} = \delta(\mathbf{r}-\mathbf{r}') \hspace{0.5cm} \text{e} \hspace{0.5cm} \{\hat{\psi}(\mathbf{r}),\hat{\psi} (\mathbf{r}')\} = \{\hat{\psi}^\dagger (\mathbf{r}),\hat{\psi}^\dagger (\mathbf{r}')\}=0. \hspace{1cm} \text{(Férmions)}
+\end{equation}
+
+Os operadores de criação e aniquilação fornecem uma linguagem extremamente útil para tratar problemas que envolvem um número muito grande de partículas. Todos os operadores físicos podem ser escritos em termos desses operadores.
+
+
+
+
+
+
+
+
+
+
+\end{document}

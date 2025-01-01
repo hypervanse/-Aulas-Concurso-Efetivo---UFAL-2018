@@ -1,0 +1,97 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx,caption}
+\usepackage[a4paper, margin=1in]{geometry}
+\linespread{1.15}
+\usepackage{empheq}
+\usepackage[most]{tcolorbox}
+\usepackage[margin=3cm]{caption}
+\usepackage{siunitx}
+\usepackage{array}
+\usepackage{braket}
+\usepackage{mathtools}
+
+\usepackage{xcolor,sectsty}
+\definecolor{astral}{RGB}{46,116,181}
+\subsectionfont{\color{astral}}
+\sectionfont{\color{astral}}
+
+\title{\includegraphics[width=0.1\textwidth]{ufallogo.png} \\
+\Huge{\color{astral}\textbf{Informação Quântica}}}
+\author{Paulo Brandão}
+\date{Maio de 2017}
+
+\newtcbox{\mymath}[1][]{%
+    nobeforeafter, math upper, tcbox raise base,
+    enhanced, colframe=blue!30!black,
+    colback=blue!30, boxrule=1pt,
+    #1}
+\newcommand*{\bfrac}[2]{\genfrac{\lbrace}{\rbrace}{0pt}{}{#1}{#2}}
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+Uma teoria quantitativa da informação apareceu na ciência na década de 40 com o trabalho de Claude Shannon intitulado \textit{Uma Teoria Matemática da Comunicação}. Neste trabalho seminal, Shannon conseguiu obter uma expressão para o conteúdo informativo de uma mensagem, chamada de \textit{Entropia de Shannon}. Além disso, demonstrou matematicamente dois importantes teoremas que relacionam a transmissão dessa informação entre duas partes através de canais de comunicação com ou sem perda. A grande ideia por trás do trabalho de Shannon foi a profunda associação do conteúdo informativo de uma mensagem com o grau de incerteza, isto é, com a probabilidade, envolvida no processo de obtenção dos caracteres da mensagem. O fato de que a probabilidade depende do conhecimento do indivíduo já era conhecido desde a época de Bayes e pode ser demonstrado por um exemplo muito simples: Se Bob coloca um prêmio dentro de uma de três caixas disponíveis e pede para que Alice escolha uma das caixas, ganhando o prêmio se acertar a caixa na qual o prêmio está, a probabilidade de acerto para Bob é 1 (ele sabe em qual caixa encontrar o prêmio) mas para Alice é 1/3. Assim, probabilidade é um conceito relativo que depende da ignorância da pessoa com relação ao determinado evento.
+
+A mecânica quântica, que começou a ser desenvolvida antes das ideias de Shannon aparecerem na literatura, envolve justamente o conceito de probabilidade de uma maneira fundamental. Toda a teoria quântica é probabilística. Dessa forma, é natural esperar que uma teoria quântica da informação fosse formulada em algum momento. Da mesma forma em que é possível quantificar o conteúdo informativo de uma mensagem clássica, podemos quantificar o conteúdo informativo de um estado quântico. A mecânica quântica pode ser utilizada para processar e transmitir informação. A grande diferença entre o processamento e a transmissão de informação quântica quando comparado com os mesmos processos num regime clássico é que no mundo microscópico as leis físicas são diferentes. Classicamente, podemos representar qualquer mensagem através da base binária $\{ 0,1 \}$ cujos elementos são chamados de bits. Uma canal de comunicação clássico transmite informação através da emissão de sinais analógicos ou digitais baseados na base binária. É dessa forma que um computador trabalha. O elemento 0 pode, por exemplo, representar um capacitor que não esteja carregado e o elemento 1 pode representar o estado do mesmo capacitor carregado. Como qualquer número pode ser representado através da base binária, é possível transmitir qualquer tipo de informação clássica utilizando 0's e 1's.
+
+Um canal de comunicação quântica, por outro lado, tem muito mais liberdade na escolha de sua base binária cujos elementos são chamados neste caso de \textit{qubits}: $\{ \ket{0},\ket{1} \}$. Isso se deve ao fato de que os sistemas físicos, quando observados na escala microscópica, exibem o fenômeno de \textit{superposição quântica}. Com apenas dois qubits podemos representar infinitos estados do tipo 
+\begin{equation}
+    \ket{\psi} = c_1 \ket{0} + c_2 \ket{1},
+\end{equation}
+um para cada valor escolhido de $c_i$ de tal forma que $|c_1|^2 + |c_2|^2 = 1$. Além da possibilidade de superposição de estados quânticos, a natureza também permite o \textit{entrelaçamento quântico}, onde um sistema formado por duas ou mais partes possui correlações entre suas entidades primárias mesmo que estejam localizadas em diferentes cidades! Essas duas propriedades, superposição e entrelaçamento, formam o coração da teoria quântica da informação e são as responsáveis pelas grandes diferenças encontradas entre as teorias clássica e quântica. 
+
+Nesta aula irei apresentar os aspectos básicos da teoria da informação clássica de Shannon com o objetivo de nivelar o estudante para esse assunto fascinante (já que esse tópico não faz parte da grade de física de um programa de graduação), através da definição do conteúdo informativo de uma mensagem. Na segunda parte da aula falarei sobre a informação quântica como definida por von Neumann e iremos aprender como quantificar informação num certo sistema regido pelas leis da mecânica quântica. A área de pesquisa em informação quântica é extremamente vasta de forma que é impossível discorrer sobre todos os seus aspectos em 15 folhas de redação ou 50 minutos de aula. Assim, o estudante que quiser se aprofundar mais sobre o assunto pode consultar a lista bibliográfica presente no plano de aula.
+
+
+\section{A entropia de Shannon}
+
+O primeiro objetivo da teoria clássica da informação é quantificar a informação contida numa mensagem. Esse problema foi resolvido por Shannon em 1948. Uma mensagem é uma sequência de letras retiradas de um \textbf{alfabeto}
+\begin{equation}
+    \mathcal{A} = \{ a_1,a_2,...,a_k \}
+\end{equation}
+onde $a_i$ podem representar letras ou números. Vamos assumir que uma mensagem seja formada pelos elementos do alfabeto de uma forma aleatória e que cada letra na mensagem é estatisticamente independente. Isso é, claro, uma aproximação que nem sempre é encontrada na prática. Num determinado texto, por exemplo, duas ou mais letras podem certamente aparecer juntas, criando uma correlação entre elas. No entanto, vamos assumir que essa aproximação seja realizável para simplificar a discussão. Assim, $a_1$ ocorre com probabilidade $p_1$, $a_2$ com probabilidade $p_2$ e $a_k$ com probabilidade $p_k$. A \textbf{entropia de Shannon} associada com a distribuição de probabilidades $\{ p_1,p_2,...,p_k \}$ é definida como
+\begin{equation}
+    H(p_1,p_2,...,p_k) = -\sum_{i=1}^k p_i \log p_i.
+\end{equation}
+Onde escolhemos a base 2 para o logaritmo. Dessa forma, a entropia é ``medida'' em bits por caractere. Iremos demonstrar agora que a entropia quantifica o quanto de informação ganhamos, \textit{na média}, quando conhecemos o valor de uma letra da mensagem. Suponha que o alfabeto possua apenas duas letras, $k = 2$: $\mathcal{A} = \{ a_1,a_2 \}$, com a probabilidade do elemento $a_1$ sendo $p$ e a do elemento $a_2$ sendo $1-p$. Shannon diz que a informação adquirida na média quando conhecemos o valor de uma letra na mensagem vale
+\begin{equation}
+    H(p) = -p\log p - (1-p)\log (1-p).
+\end{equation}
+Se a mensagem transmitida consistisse apenas de uma das letras, por exemplo a letra $a_1$, então $p = 1$ e, de acordo com a fórmula acima, $H = 0$. Ou seja, não adquirimos nenhuma informação. Faz sentido? Sim! Pois se a probabilidade da letra $a_1$ é 1, sabemos com certeza que a mensagem contém apenas caracteres $a_1$. Não adquirimos nenhuma informação nova com isso. Se alguém perguntasse qual seria a próxima letra na mensagem, falaríamos que com certeza será a letra $a_1$. O mesmo se aplica para o caso onde $p = 0$, de tal forma que a mensagem consiste apenas da letra $a_2$. Por outro lado, se $p = 1/2$ então a entropia de Shannon possui seu valor máximo $H = 1$. Isso quer dizer que, a cada letra recebida, em média, ganhamos/recebemos um bit de informação. Dessa forma, informação é uma medida da nossa ignorância a priori. Tipicamente, escrevemos as letras $a_1$ e $a_2$ como dígitos binários; isto é $a_1 = 0$ e $a_2 = 1$.
+
+A entropia de Shannon depende portanto apenas da distribuição de probabilidades dos caracteres (que podem ser letras, números, etc) que formam o alfabeto. Seu valor máximo ocorre quando todos os elementos que formam a mensagem possuem a mesma probabilidade de ocorrência. Isso é esperado do ponto de vista de informação porque é nesta situação que não esperamos receber um caractere com mais frequência que outro. O próximo passo de Shannon foi verificar a possibilidade de compressão de uma lista de caracteres para que possa ser transmitida por um canal de comunicação \textbf{sem ruído}. Considere um alfabeto com $k = 4$ elementos $\{ a,b,c,d \}$ com respectivas probabilidades $\{ 1/2,1/4,1/8,1/8  \}$. Precisamos primeiramente codificar as letras em um sistema binário que irá ser transmitido pelo canal. Podemos escolher a representação
+\begin{equation}
+    a \rightarrow 00 \hspace{0.5cm} b \rightarrow 01
+\end{equation}
+\begin{equation}
+    c \rightarrow 10 \hspace{0.5cm} d \rightarrow 11
+\end{equation}
+Assim, se quisermos transmitir a mensagem $aadbca$, codificamos como $000011011000$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
